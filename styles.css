@@ -1,0 +1,62 @@
+/* Global styles */
+body { 
+  margin: 0; 
+  font-family: system-ui, sans-serif; 
+}
+
+/* Map container */
+#map { 
+  height: 100vh; 
+  width: 100%; 
+}
+
+/* Popup styles */
+.popup-container {
+  min-width: 200px;
+  max-width: 250px;
+}
+
+.popup-image {
+  max-width: 150px;
+  object-fit: cover; 
+  margin: 5px 0;
+}
+
+.popup-description {
+  margin: 5px 0 !important;
+  font-size: 13px;
+}
+
+.popup-pluscode {
+  color: #666;
+}
+
+.popup-date {
+  font-style: italic;
+}
+
+/* Custom marker styles */
+.custom-marker-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 20px;
+  filter: hue-rotate(0deg) brightness(1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-marker-clicked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 24px;
+  filter: hue-rotate(120deg) brightness(1.5) saturate(2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  transform: scale(1.2);
+}
