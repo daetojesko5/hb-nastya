@@ -111,18 +111,26 @@ let cluster = L.markerClusterGroup({
 const iconAnchorY = window.innerWidth < 900 ? 5 : 15;
 
 // Create custom marker icons
+// NOTE: Keep iconSize/iconAnchor in sync with the CSS for `.custom-marker-*`
+// so the marker stays exactly on its lat/lng at all zoom levels.
+const MARKER_ICON_W = 48;
+const MARKER_ICON_H = 48;
+const markerIconAnchor = [MARKER_ICON_W / 2, MARKER_ICON_H];
+
 const defaultIcon = L.divIcon({
   className: 'custom-marker-default',
-  html: '<span>📍</span>',
-  iconSize: [30, 60],
-  iconAnchor: [15, iconAnchorY]
+  html: '<span class="pin-emoji">📍</span>',
+  iconSize: [MARKER_ICON_W, MARKER_ICON_H],
+  iconAnchor: markerIconAnchor,
+  popupAnchor: [0, -MARKER_ICON_H / 2 - 5]
 });
 
 const clickedIcon = L.divIcon({
   className: 'custom-marker-clicked',
-  html: '<span>📍</span>',
-  iconSize: [30, 60],
-  iconAnchor: [15, iconAnchorY]
+  html: '<span class="pin-emoji">📍</span>',
+  iconSize: [MARKER_ICON_W, MARKER_ICON_H],
+  iconAnchor: markerIconAnchor,
+  popupAnchor: [0, -MARKER_ICON_H / 2 - 5]
 });
 
 // Track clicked markers
@@ -327,23 +335,17 @@ function createMarkers() {
 loadPlaces();
 
 map.on("popupopen", (e) => {
-  const popupEl = e.popup.getElement();
-  if (!popupEl) return;
+  const source = e.popup?._source;
+  if (!source || typeof source.getLatLng !== "function") return;
 
-  // Wait a tick so Leaflet finishes positioning the popup
+  // Pan based on the marker/click location (stable even while popup images load)
   requestAnimationFrame(() => {
-    const mapRect = map.getContainer().getBoundingClientRect();
-    const popRect = popupEl.getBoundingClientRect();
+    const markerPoint = map.latLngToContainerPoint(source.getLatLng());
+    const size = map.getSize();
+    const targetPoint = L.point(size.x / 2, size.y * 0.75);
 
-    const mapCenterX = mapRect.left + mapRect.width / 2;
-    const mapCenterY = mapRect.top  + mapRect.height / 2 + 150;
-
-    const popCenterX = popRect.left + popRect.width / 2;
-    const popCenterY = popRect.top  + popRect.height / 2;
-
-    // Pan so popup center -> map center
-    const dx = popCenterX - mapCenterX;
-    const dy = popCenterY - mapCenterY;
+    const dx = markerPoint.x - targetPoint.x;
+    const dy = markerPoint.y - targetPoint.y;
 
     map.panBy([dx, dy], { animate: true });
   });

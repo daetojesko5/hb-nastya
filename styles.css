@@ -232,20 +232,21 @@ body {
 /* Custom marker styles */
 .custom-marker-default {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   background: none;
   border: none;
   filter: hue-rotate(0deg) brightness(1);
   transition: all 0.3s ease;
   cursor: pointer;
-  transform: scale(2);
+  /* transform: scale(2); */
   font-size: 2rem;
+  line-height: 1;
 }
 
 .custom-marker-clicked {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   background: none;
   border: none;
@@ -254,6 +255,13 @@ body {
   cursor: pointer;
   /* transform: scale(1.2); */
   font-size: 2rem;
+  line-height: 1;
+}
+
+.custom-marker-default .pin-emoji,
+.custom-marker-clicked .pin-emoji {
+  line-height: 1;
+  display: block;
 }
 
 /* Large screens */

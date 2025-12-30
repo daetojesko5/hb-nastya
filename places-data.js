@@ -24,7 +24,7 @@ const placesData = [
     }
   },
   {
-    "caption": "Крок до Лідера",
+    "caption": "Крок до Лідерства",
     "lat": null,
     "lng": null,
     "date": null,
