@@ -7,7 +7,7 @@ function updateRootFont() {
   let rootPx = 3.47826087 * effective + 8.91304348;
 
   // optional safety clamp (tweak to taste)
-  rootPx = Math.max(12, Math.min(rootPx, 45));
+  rootPx = Math.max(12, Math.min(rootPx, 16));
 
   document.documentElement.style.fontSize = `${rootPx.toFixed(2)}px`;
 }
