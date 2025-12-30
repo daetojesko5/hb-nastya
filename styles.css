@@ -1,17 +1,20 @@
 :root {
-  --common-font-size: 500%; /* Global variable */
+  --common-font-size:  1rem; /* Global variable */
    --big-popup-width: 70vw;
    --popup-image-width: 70vw;
+   --dpr: 1;
 }
 
 @media screen and (min-width: 1024px) {
   :root {
-    --common-font-size: 200%; /* Global variable */
     --big-popup-width: 35vw;
     --popup-image-width: 35vw;
 }
     
 }
+
+/* html { font-size: calc(6 * var(--dpr) * var(--dpr) ); } */
+
 
 /* Global styles */
 body { 
@@ -22,7 +25,7 @@ body {
 /* Map container */
 #map { 
   height: 100vh; 
-  width: 100%; 
+  width: 100%;
 }
 
 /* Counter styles */
@@ -35,7 +38,7 @@ body {
   border-radius: 8px;
   padding: 8px 12px;
   font-family: monospace;
-  font-size: var(--common-font-size);
+  font-size: 1.5rem;
   font-weight: bold;
   color: #333;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -45,8 +48,8 @@ body {
 /* Heart icon styles */
 .heart-icon {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 1.5rem;
+  right: 1.5rem;
   font-size: 3rem;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.9);
@@ -93,7 +96,7 @@ body {
 }
 
 /* Large screens */
-@media screen and (max-width: 1024px) {
+/* @media screen and (max-width: 1024px) {
   .heart-popup {
     transform: scale(2);
   }
@@ -105,7 +108,7 @@ body {
     bottom: 30px;
     right: 30px;
   }
-}
+} */
 
 .heart-popup-content {
   position: relative;
@@ -122,7 +125,7 @@ body {
 .heart-popup-content h3 {
   margin: 0 0 15px 0;
   color: #333;
-  font-size: 1.5rem;
+  font-size: var(--common-font-size);
 }
 
 .heart-popup-image {
@@ -158,7 +161,7 @@ body {
 .heart-popup-content p {
   margin: 10px 0;
   color: #333;
-  font-size: 1.1rem;
+  font-size: var(--common-font-size);
 }
 
 .close-x {
@@ -167,7 +170,7 @@ body {
   right: 15px;
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: var(--common-font-size);
   color: #333;
   cursor: pointer;
   width: 30px;
@@ -212,7 +215,6 @@ body {
 
 .popup-description {
   margin: 5px 0 !important;
-  /* font-size: 3em; */
 }
 
 .popup-pluscode {
@@ -238,7 +240,7 @@ body {
   transition: all 0.3s ease;
   cursor: pointer;
   transform: scale(2);
-  font-size: 500%;
+  font-size: 2rem;
 }
 
 .custom-marker-clicked {
@@ -251,11 +253,11 @@ body {
   transition: all 0.3s ease;
   cursor: pointer;
   /* transform: scale(1.2); */
-  font-size: 500%;
+  font-size: 2rem;
 }
 
 /* Large screens */
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
   .custom-marker-default {
     font-size: 200%;
   }
@@ -263,12 +265,12 @@ body {
   .custom-marker-clicked {
     font-size: 200%;
   }
-}
+} */
 
 .big-popup .leaflet-popup-content {
   width: var(--big-popup-width) !important;         /* popup inner width */ 
   max-height: 60vh;
-  font-size: 3em;    /* text size */
+  font-size: var(--common-font-size);    /* text size */
   line-height: 1.5;
   margin: 10px 12px;  /* inner padding feel */
   overflow-y: auto;
@@ -285,7 +287,7 @@ body {
 }
 
 /* Large screens */
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
   .custom-marker-default {
     font-size: 200%;
   }
@@ -295,6 +297,6 @@ body {
   }
 
   .big-popup .leaflet-popup-content {
-    font-size: 1em;    /* text size */
+    font-size: 1em;    
   }
-}
+} */

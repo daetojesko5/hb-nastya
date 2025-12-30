@@ -1,4 +1,20 @@
-// import { decode, expand } from "https://cdn.jsdelivr.net/npm/pluscodes@3.0.1/dist/index.js";
+function updateRootFont() {
+  const dpr = window.devicePixelRatio || 1;
+  const scale = window.visualViewport?.scale || 1;
+
+  const effective = dpr / scale; // key signal from your examples
+
+  let rootPx = 3.47826087 * effective + 8.91304348;
+
+  // optional safety clamp (tweak to taste)
+  rootPx = Math.max(12, Math.min(rootPx, 45));
+
+  document.documentElement.style.fontSize = `${rootPx.toFixed(2)}px`;
+}
+
+updateRootFont();
+window.addEventListener("resize", updateRootFont);
+window.visualViewport?.addEventListener("resize", updateRootFont)
 
 // Location class
 class Location {
@@ -92,25 +108,28 @@ let cluster = L.markerClusterGroup({
   disableClusteringAtZoom: 0
 });
 
+const iconAnchorY = window.innerWidth < 900 ? 5 : 15;
+
 // Create custom marker icons
 const defaultIcon = L.divIcon({
   className: 'custom-marker-default',
   html: '<span>📍</span>',
   iconSize: [30, 60],
-  iconAnchor: [15, 0]
+  iconAnchor: [15, iconAnchorY]
 });
-
-
 
 const clickedIcon = L.divIcon({
   className: 'custom-marker-clicked',
   html: '<span>📍</span>',
   iconSize: [30, 60],
-  iconAnchor: [15, 0]
+  iconAnchor: [15, iconAnchorY]
 });
 
 // Track clicked markers
 let clickedMarkers = new Set();
+
+// Start background audio on the first marker click (session-only)
+let backgroundAudioStarted = false;
 
 // Local storage functions
 function saveClickedMarkers() {
@@ -228,6 +247,15 @@ function createMarkers() {
 
     // Add click event listener to change marker color
     marker.on('click', function() {
+      if (!backgroundAudioStarted) {
+        backgroundAudioStarted = true;
+        if (typeof window.startBackgroundAudio === 'function') {
+          window.startBackgroundAudio();
+        } else {
+          document.dispatchEvent(new Event('start-background-audio'));
+        }
+      }
+
       if (!clickedMarkers.has(marker)) {
         // If not clicked, change to clicked color
         marker.setIcon(clickedIcon);
@@ -308,14 +336,14 @@ map.on("popupopen", (e) => {
     const popRect = popupEl.getBoundingClientRect();
 
     const mapCenterX = mapRect.left + mapRect.width / 2;
-    const mapCenterY = mapRect.top  + mapRect.height / 2;
+    const mapCenterY = mapRect.top  + mapRect.height / 2 + 150;
 
     const popCenterX = popRect.left + popRect.width / 2;
     const popCenterY = popRect.top  + popRect.height / 2;
 
     // Pan so popup center -> map center
     const dx = popCenterX - mapCenterX;
-    const dy = popCenterY - mapCenterY - popRect.height / 2;
+    const dy = popCenterY - mapCenterY;
 
     map.panBy([dx, dy], { animate: true });
   });
