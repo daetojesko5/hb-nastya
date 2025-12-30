@@ -1,3 +1,18 @@
+:root {
+  --common-font-size: 500%; /* Global variable */
+   --big-popup-width: 70vw;
+   --popup-image-width: 70vw;
+}
+
+@media screen and (min-width: 1024px) {
+  :root {
+    --common-font-size: 200%; /* Global variable */
+    --big-popup-width: 35vw;
+    --popup-image-width: 35vw;
+}
+    
+}
+
 /* Global styles */
 body { 
   margin: 0; 
@@ -10,25 +25,202 @@ body {
   width: 100%; 
 }
 
-/* Popup styles */
-.popup-container {
-  min-width: 200px;
-  max-width: 250px;
+/* Counter styles */
+.marker-counter {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: monospace;
+  font-size: var(--common-font-size);
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+/* Heart icon styles */
+.heart-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 3rem;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #ff69b4;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  animation: heartbeat 2s infinite;
+}
+
+.heart-icon:hover {
+  transform: scale(1.1);
+  background: rgba(255, 105, 180, 0.1);
+}
+
+@keyframes heartbeat {
+  0%, 50%, 100% {
+    transform: scale(1);
+  }
+  25%, 75% {
+    transform: scale(1.05);
+  }
+}
+
+/* Heart popup styles */
+.heart-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Large screens */
+@media screen and (max-width: 1024px) {
+  .heart-popup {
+    transform: scale(2);
+  }
+
+  .heart-icon {
+    width: 120px;
+    height: 120px;
+    font-size: 6rem;
+    bottom: 30px;
+    right: 30px;
+  }
+}
+
+.heart-popup-content {
+  position: relative;
+  background: white;
+  border: 2px solid #333333a4;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease;
+}
+
+.heart-popup-content h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.heart-popup-image {
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin: 10px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.05);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+
+
+.heart-popup-content p {
+  margin: 10px 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.close-x {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #333;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.close-x:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #000;
+  transform: scale(1.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to { 
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .popup-image {
-  max-width: 150px;
-  object-fit: cover; 
+  max-width: var(--popup-image-width);
+  object-fit: fill; 
   margin: 5px 0;
+  max-height: 50vh;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
 }
 
 .popup-description {
   margin: 5px 0 !important;
-  font-size: 13px;
+  /* font-size: 3em; */
 }
 
 .popup-pluscode {
   color: #666;
+}
+
+.popup-container {
+    max-height: 60vh;
 }
 
 .popup-date {
@@ -42,10 +234,11 @@ body {
   justify-content: center;
   background: none;
   border: none;
-  font-size: 20px;
   filter: hue-rotate(0deg) brightness(1);
   transition: all 0.3s ease;
   cursor: pointer;
+  transform: scale(2);
+  font-size: 500%;
 }
 
 .custom-marker-clicked {
@@ -54,9 +247,54 @@ body {
   justify-content: center;
   background: none;
   border: none;
-  font-size: 24px;
   filter: hue-rotate(120deg) brightness(1.5) saturate(2);
   transition: all 0.3s ease;
   cursor: pointer;
-  transform: scale(1.2);
+  /* transform: scale(1.2); */
+  font-size: 500%;
+}
+
+/* Large screens */
+@media screen and (min-width: 1024px) {
+  .custom-marker-default {
+    font-size: 200%;
+  }
+  
+  .custom-marker-clicked {
+    font-size: 200%;
+  }
+}
+
+.big-popup .leaflet-popup-content {
+  width: var(--big-popup-width) !important;         /* popup inner width */ 
+  max-height: 60vh;
+  font-size: 3em;    /* text size */
+  line-height: 1.5;
+  margin: 10px 12px;  /* inner padding feel */
+  overflow-y: auto;
+   /* Firefox */
+  scrollbar-width: none;
+
+  /* IE/old Edge */
+  -ms-overflow-style: none;
+}
+
+.big-popup .leaflet-popup-content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Large screens */
+@media screen and (min-width: 1024px) {
+  .custom-marker-default {
+    font-size: 200%;
+  }
+  
+  .custom-marker-clicked {
+    font-size: 200%;
+  }
+
+  .big-popup .leaflet-popup-content {
+    font-size: 1em;    /* text size */
+  }
 }

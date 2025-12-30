@@ -23,6 +23,69 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
+// Create counter element
+const counterElement = document.createElement('div');
+counterElement.id = 'marker-counter';
+counterElement.className = 'marker-counter';
+counterElement.textContent = '0/0';
+document.body.appendChild(counterElement);
+
+// Create heart icon element
+const heartIcon = document.createElement('div');
+heartIcon.id = 'heart-icon';
+heartIcon.className = 'heart-icon';
+heartIcon.innerHTML = '❤️';
+heartIcon.title = 'Click for surprise!';
+heartIcon.style.display = 'none'; // Hide initially
+document.body.appendChild(heartIcon);
+
+// Function to check if all markers are clicked
+function checkAllMarkersClicked() {
+  const totalCount = places.filter(p => p.lat && p.lng).length;
+  const clickedCount = clickedMarkers.size;
+  
+  if (totalCount > 0 && clickedCount === totalCount) {
+    heartIcon.style.removeProperty('display');
+  } else {
+    heartIcon.style.display = 'none';
+  }
+}
+
+// Add click handler for heart icon
+heartIcon.addEventListener('click', function() {
+  showHeartPopup();
+});
+
+// Function to show heart popup
+function showHeartPopup() {
+  // Remove existing popup if any
+  const existingPopup = document.querySelector('.heart-popup');
+  if (existingPopup) {
+    existingPopup.remove();
+  }
+  
+  // Create popup
+  const popup = document.createElement('div');
+  popup.className = 'heart-popup';
+  popup.innerHTML = `
+    <div class="heart-popup-content">
+      <h3>Любімка, з твоїм днем 💕</h3>
+      <img src="images/love.png" class="heart-popup-image" alt="Love" />
+      <p>Нехай всі мрії збуваються!</p>
+    </div>
+  `;
+  
+  // Add click handler to close when clicking outside
+  popup.addEventListener('click', function(e) {
+    // Only close if clicking on the overlay (not the content)
+    if (e.target === popup) {
+      popup.remove();
+    }
+  });
+  
+  document.body.appendChild(popup);
+}
+
 // 3) Load places from JSON and create markers
 let places = [];
 let cluster = L.markerClusterGroup({
@@ -32,16 +95,18 @@ let cluster = L.markerClusterGroup({
 // Create custom marker icons
 const defaultIcon = L.divIcon({
   className: 'custom-marker-default',
-  html: '📍',
-  iconSize: [20, 20],
-  iconAnchor: [10, 20]
+  html: '<span>📍</span>',
+  iconSize: [30, 60],
+  iconAnchor: [15, 0]
 });
+
+
 
 const clickedIcon = L.divIcon({
   className: 'custom-marker-clicked',
-  html: '📍',
-  iconSize: [20, 20],
-  iconAnchor: [10, 20]
+  html: '<span>📍</span>',
+  iconSize: [30, 60],
+  iconAnchor: [15, 0]
 });
 
 // Track clicked markers
@@ -61,6 +126,16 @@ function loadClickedMarkers() {
 function isMarkerClicked(caption) {
   const clickedCaptions = loadClickedMarkers();
   return clickedCaptions.includes(caption);
+}
+
+// Function to update counter display
+function updateCounter() {
+  const totalCount = places.filter(p => p.lat && p.lng).length;
+  const clickedCount = clickedMarkers.size;
+  counterElement.textContent = `${clickedCount}/${totalCount}`;
+  
+  // Check if heart should be visible
+  checkAllMarkersClicked();
 }
 
 // Function to decode plus code to lat/lng
@@ -155,12 +230,23 @@ function createMarkers() {
     marker.on('click', function() {
       if (!clickedMarkers.has(marker)) {
         // If not clicked, change to clicked color
-
         marker.setIcon(clickedIcon);
         clickedMarkers.add(marker);
-         // Save to localStorage whenever clicked state changes
+        // Save to localStorage whenever clicked state changes
         saveClickedMarkers();
+        // Update counter display
+        updateCounter();
       }
+      // else
+      // {
+      //   // If not clicked, change to clicked color
+      //   marker.setIcon(defaultIcon);
+      //   clickedMarkers.delete(marker);
+      //   // Save to localStorage whenever clicked state changes
+      //   saveClickedMarkers();
+      //   // Update counter display
+      //   updateCounter();
+      // }
     });
 
     // Create popup HTML with Location data
@@ -188,7 +274,9 @@ function createMarkers() {
     
     popupContent += `</div>`;
     
-    marker.bindPopup(popupContent);
+    marker.bindPopup(popupContent, {
+      className: "big-popup"
+    });
     cluster.addLayer(marker);
   });
 
@@ -202,7 +290,33 @@ function createMarkers() {
   } else {
     map.setView([50.4501, 30.5234], 12);
   }
+  
+  // Update counter after creating markers
+  updateCounter();
 }
 
 // Initialize the map by loading places
 loadPlaces();
+
+map.on("popupopen", (e) => {
+  const popupEl = e.popup.getElement();
+  if (!popupEl) return;
+
+  // Wait a tick so Leaflet finishes positioning the popup
+  requestAnimationFrame(() => {
+    const mapRect = map.getContainer().getBoundingClientRect();
+    const popRect = popupEl.getBoundingClientRect();
+
+    const mapCenterX = mapRect.left + mapRect.width / 2;
+    const mapCenterY = mapRect.top  + mapRect.height / 2;
+
+    const popCenterX = popRect.left + popRect.width / 2;
+    const popCenterY = popRect.top  + popRect.height / 2;
+
+    // Pan so popup center -> map center
+    const dx = popCenterX - mapCenterX;
+    const dy = popCenterY - mapCenterY - popRect.height / 2;
+
+    map.panBy([dx, dy], { animate: true });
+  });
+});
