@@ -156,7 +156,7 @@ const placesData = [
     "lat": null,
     "lng": null,
     "date": null,
-    "description": "Не пам'ятаю адресу)) Декілька разів приходив дивитись твій виступ. Останній раз, коли сильно затримали по часу, промурашився і ледь не просльозився від вас",
+    "description": "Декілька разів приходив дивитись твій виступ. Останній раз, коли сильно затримали по часу, промурашився і ледь не просльозився від вас",
     "imgUrl": null,
     "withHeart": true,
     "plusCode": "9G2G9JX6+7H"
@@ -186,7 +186,7 @@ const placesData = [
     "lng": null,
     "date": null,
     "description": "Ти підтримувала мене на концерті",
-    "imgUrl": null,
+    "imgUrl": "images/volume.jpg",
     "withHeart": true,
     "plusCode": "9G2GCCWJ+RR"
   },
@@ -196,7 +196,7 @@ const placesData = [
     "lng": null,
     "date": null,
     "description": "Ти підтримувала мене на концерті",
-    "imgUrl": "images/teplyi_lampovyi.jpg",
+    "imgUrl": "images/tepliy_lampoviy.jpg",
     "withHeart": true,
     "plusCode": "9G2GCGQX+Q8"
   },
@@ -265,7 +265,8 @@ const placesData = [
     "date": null,
     "description": "Одне з наших найперших побачень",
     "imgUrl": null,
-    "plusCode": "9G2GCHM4+XW"
+    "plusCode": "9G2GCHM4+XW",
+    "withHeart": true
   },
   {
     "caption": "Музей мініатюр",
@@ -274,7 +275,8 @@ const placesData = [
     "date": null,
     "description": "Одне з наших найперших побачень, ",
     "imgUrl": null,
-    "plusCode": "9G2GCHP4+5J"
+    "plusCode": "9G2GCHP4+5J",
+    "withHeart": true
   },
   {
     "caption": "Софіївська площа",
@@ -310,7 +312,7 @@ const placesData = [
     "lng": null,
     "date": null,
     "description": "Збирались там пару раз на посиденьки",
-    "imgUrl": "images/kv_lexi.jpg",
+    "imgUrl": "images/kv_lehi.jpg",
     "plusCode": "9G2GFGW9+FW7"
   },
   {
@@ -391,7 +393,7 @@ const placesData = [
     "lng": null,
     "date": null,
     "description": "Спочатку нелегально, потім легально в присутності хазяїна квартири. Різним ми там займались, наприклад, проходили тести із твоїх дитячих журналів.",
-    "imgUrl": "images/kv_tvodo_didus.jpg",
+    "imgUrl": "images/kv_tvogo_didus.jpg",
     "plusCode": "9G2GF88X+478"
   },
   {
@@ -408,7 +410,7 @@ const placesData = [
     "lat": null,
     "lng": null,
     "date": null,
-    "description": "Поганяли на картих, пам1ятаю що тобі не дуже сподобалось але все ж))",
+    "description": "Поганяли на картих, пам'ятаю що тобі не дуже сподобалось але все ж))",
     "imgUrl": null,
     "plusCode": "9G2GFGP9+9J"
   },
@@ -478,7 +480,7 @@ const placesData = [
     "description": "А ти знала що це найвища будівля України? Я там працював до речі",
     "imgUrl": "images/carnegie-tower.jpg",
     "withHeart": false,
-    "plusCode": "9G2GFFG4+49"
+    "plusCode": "9G2GCGQQ+CF9"
   },
   {
     "caption": "Гора біля Тараса Шевченка",
@@ -495,9 +497,9 @@ const placesData = [
     "lat": null,
     "lng": null,
     "date": null,
-    "description": "В підвалі якоїсл школи на Оболоні трошки постріляли з лука в кульки",
+    "description": "В підвалі якоїсь школи на Оболоні трошки постріляли з лука в кульки",
     "imgUrl": "images/bow.jpg",
     "withHeart": true,
-    "plusCode": "9G2GFF9V+JV"
+    "plusCode": "9G2GFGX5+9G"
   },
 ];
